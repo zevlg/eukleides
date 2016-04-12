@@ -1,0 +1,78 @@
+
+                        EUKLEIDES version 1.5.4
+
+                Copyright (c) Christian Obrecht 2004-2010
+
+                         obrecht@eukleides.org
+
+1. PURPOSE
+
+Eukleides is a computer language devoted to elementary plane geometry.
+It aims to be a fairly comprehensive system to create geometric figures,
+either static or dynamic. It allows to handle basic types of data:
+numbers and strings, as well as geometric types of data: points,
+vectors, sets (of points), lines, circles, and conics.
+
+    A Eukleides script usually consists in a declarative part where
+objects are defined, and a descriptive part where objects are drawn.
+Nonetheless, Eukleides is also a full featured programming language,
+providing conditional and iterative structures, user defined functions,
+modules, etc. Hence, it can easily be extended. A quick start page and
+some code samples are available on-line (www.eukleides.org), in addition
+to the Eukleides Reference Manual which is maintained as a Texinfo
+manual.
+
+    The Eukleides distribution provides two distinct interpreters:
+'eukleides' and 'euktopst,' and three shell scripts: 'euktoeps',
+'euktotex', and 'euktopdf'. The former interpreter produces Encapsulated
+PostScript (EPS). The later, which is run by the scripts, produces
+TeXable PSTricks macros. The 'euktoeps' script is an alternative to
+'eukleides' when mathematics typesetting is required. The two other
+scripts are useful when using Eukleides together with LaTeX.
+
+    Bug reports as well as comments or contributions should be sent to
+the author of Eukleides, Christian Obrecht (obrecht@eukleides.org).
+
+2. LICENSE
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 3 of the License, or (at your
+option) any later version.
+
+    See file COPYING for more details.
+
+3. INSTALL
+
+The present Eukleides distribution was developed on a Debian GNU/Linux
+platform. It should build on most of the recent Unices, provided some
+common tools are installed. For instance, when using a Debian based
+distribution, you may need to install the following packages: flex,
+bison, libreadline-dev, texinfo. When enabling localized keywords, you
+may additionally need to install gettext and perl.
+
+    Eukleides binaries are reported to build on Mac OS X with disabled
+localization feature. Since there are also some issues with info
+documentation, it is recommended to comment out the 'DOC' target in
+'Config' and use the documentation available online instead. Any help on
+solving these problems is welcome.
+ 
+    As usual, type 'make' and 'make install' on command line. This will
+install the interpreters, the scripts, the 'eukleides' LaTeX package,
+the available locales, the reference manual (in info format, PDF, and
+HTML format), and the man pages. Default paper format for PDF is A4.
+Documentation in HTML format is split in multiple files by default.
+
+    The default installation prefix is '/usr/local/'. When using this
+prefix make sure the environment variables INFOPATH, MANPATH, and
+TEXMFHOME are properly set.
+
+    The build settings may be altered by editing the 'Config' file.
+
+4. LOCALIZATION
+
+Eukleides allows to use localized keywords in scripts. To add a new
+language, create the 'eukleides.pot' template file by typing 'make pot'
+in the 'po/' directory, rename it appropriately and fill out the empty
+fields. Since po files are used to generate locale documentation, avoid
+changing the file's structure.

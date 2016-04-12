@@ -1,0 +1,60 @@
+% Sundial module
+% Copyright (c) Christian Obrecht, 2010
+
+% These functions are intented for drawing horizontal sundials. They
+% assume that the origin of the sundial is point(0, 0), and that the
+% y-direction corresponds to N-S. Parameter p is the latitude, l the
+% length of the stylus, d the declination. The time parameters are j for
+% the day (0 to 364), and h for the time of day, which must be expressed
+% in angular units: midday is 0° and 1 h = 15°.
+
+% Time lines
+
+line time_line(number p, number h)
+  return line(point(0, 0), 90 + atan(sin(p)*tan(h)) deg)
+end
+
+% Zodiacal lines
+
+conic zodiacal_hyperbola(number l, number p, number d)
+  local a, c, s, m, O'
+  a = l*sin(p)
+  c = cos(d)
+  s = sin(d)
+  m = s^2 - cos(p)^2
+  O' = point(0, cos(p)*(l - a*sin(p)/m))
+  return hyperbola(O', abs(a*c*s/m), abs(a*c/sqrt(abs(m))), 90 deg)
+end
+
+line equinoctial_axis(number l, number p)
+  return line(point(0, l*cos(p) + l*sin(p)*tan(p)), 0 deg)
+end
+
+% Equation of time
+
+point stylus(number l, number p, number j, number h)
+  local M, C, L, R, E, d, cd, sd, az, q, sq, cq, h', rh
+  M = 357 + 0.9856*j
+  C = 1.914*sin(M) + 0.02*sin(2*M)
+  L = 280 + C + 0.9856*j
+  R = -2.466 * sin(2*L) + 0.053 * sin(4*L)
+  E = C + R
+  d = asin(0.3978*sin(L))
+  cd = cos(d)
+  sd = sin(d)
+  az = cos(-sd/cos(p))
+  q = atan(tan(p)/cos(h + E))
+  sq = sin(q)
+  cq = cos(q)
+  h' = atan(sin(p)*tan(h + E))
+  rh = abs(l*cd/(cq*cd + sq*sd))
+  return point(rh, 90 - h' deg)
+end
+
+set equation_of_time(number l, number p, number h)
+  local e
+  locus e(j = 0 to 365 step 200)
+     put stylus(l, p, j, h)
+  end
+  return e
+end

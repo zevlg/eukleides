@@ -1,0 +1,2007 @@
+%
+%  Eukleides Reference Manual
+%
+%  Copyright (c) Christian Obrecht 2010
+%
+
+% ------------------------------------------------------------------------------
+
+\def\LaTeX{L\kern-.34em\raise.49ex\hbox{\sevenrm A}\kern-.18em\TeX}
+\def\mdeg{$^\circ$}
+\font\degfont=cmtt8
+\def\deg{\raise.7ex\hbox{\degfont o}}
+\def\exm#1{\noindent{\textit Example:}\quad{\texttt #1}}
+\def\exmp{\noindent{\textit Example:}}
+
+% ------------------------------------------------------------------------------
+
+\input texinfo
+
+@c %**start of header
+@setfilename eukleides.info
+@settitle Eukleides Reference Manual
+@c %**end of header
+
+@documentencoding UTF-8
+
+@dircategory Science
+@direntry
+* Eukleides: (eukleides).		A Euclidean Geometry Drawing Language
+@end direntry
+
+@c -----------------------------------------------------------------------------
+
+@ifnottex
+
+@macro LaTeX
+LaTeX
+@end macro
+@macro deg
+°
+@end macro
+@macro mdeg
+°
+@end macro
+@macro exm{txt}
+@noindent
+Example: @code{\txt\}
+@end macro
+@macro exmp
+@noindent
+Example:
+@end macro
+
+@end ifnottex
+
+@macro numb
+@verb{.#.}
+@end macro
+
+@c -----------------------------------------------------------------------------
+
+@iftex
+
+@titlepage
+
+@tex
+\font\titlefont=cmr10 at 24pt
+{\titlefont E\char'007K\char'003EI\char'001H\char'006}
+@end tex
+
+@vskip -12pt
+@title 
+
+@subtitle A Euclidean Geometry Drawing Language
+
+@vskip 0pt plus 1filll
+@center @image{perdigal}
+
+@author Christian Obrecht
+
+@page
+
+@vskip 0pt plus 1filll
+
+@noindent
+Copyright @copyright{} 2010, Christian Obrecht.
+
+@noindent
+Permission is granted to make and distribute verbatim copies of this manual
+provided the copyright notice and this permission notice are preserved on all
+copies.
+
+@end titlepage
+
+@headings off
+@contents
+@tex
+\global\advance\pageno by -1
+\null\break
+@end tex
+
+@headings double
+
+@end iftex
+
+@c -----------------------------------------------------------------------------
+
+@ifhtml
+
+@titlepage
+@title
+@end titlepage
+
+@contents
+
+@end ifhtml
+
+@c -----------------------------------------------------------------------------
+
+@ifinfo
+
+@node Top
+@top Eukleides Reference Manual
+
+This manual is for Eukleides, a language devoted to Euclidean geometry, as
+implemented in version 1.5.4 of the @command{eukleides} interpreter.
+
+@menu
+* Introduction::
+* General Syntax::
+* Numbers::
+* Strings::
+* Points::
+* Vectors::
+* Sets::
+* Lines::
+* Circles::
+* Conics::
+* Transformations::
+* Intersections::
+* Triangles::
+* Quadrilaterals::
+* Locus Assignments::
+* Drawing Commands::
+* Label Commands::
+* Input and Output::
+* Conditional Statements::
+* Iterative Statements::
+* Function Definitions::
+* Modules::
+* Interactive Variables::
+* Invocation::
+* @TeX{}::
+* Localized Keywords::
+* Command Index::
+* Concept Index::
+@end menu
+
+@end ifinfo
+
+@c -----------------------------------------------------------------------------
+
+@node Introduction, General Syntax, Top, Top
+
+@unnumbered Introduction
+
+This manual describes the second version of the Eukleides language, as
+implemented in the @command{eukleides} 1.5.4 interpreter. The first version of
+the language was implemented in @command{eukleides} up to 1.0, which is not
+developed any longer. Even though both versions have rather close designs,
+there is no backwards compatibility.
+
+Eukleides is a computer language devoted to elementary plane geometry. It aims
+to be a fairly comprehensive system to create geometric figures, either static
+or dynamic. It allows to handle basic types of data: numbers and strings, as
+well as geometric types of data: points, vectors, sets (of points), lines,
+circles, and conics.
+
+A Eukleides script usually consists in a declarative part where objects are
+defined, and a descriptive part where objects are drawn. Nonetheless, Eukleides
+is also a full featured programming language, providing conditional and
+iterative structures, user defined functions, modules, etc. Hence, it can easily
+be extended.
+
+The Eukleides distribution provides two distinct interpreters:
+@command{eukleides} and @command{euktopst}, and three shell scripts:
+@command{euktoeps}, @command{euktotex}, and @command{euktopdf}. The former
+interpreter produces Encapsulated PostScript (EPS). The later, which is run by
+the scripts, produces @TeX{}able PSTricks macros. The @command{euktoeps} script
+is an alternative to @command{eukleides} when mathematics typesetting is
+required. The two other scripts are useful when using Eukleides together with
+@LaTeX{}.
+
+The first version of Eukleides came with a graphical user interface (GUI) named
+@command{xeukleides}, allowing to create and view interactive figures. A GUI for
+the second version will be developed in the future. Yet, the specifications of
+the language already include interactivity.
+
+Eukleides is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 3 of the License, or (at your option) any later
+version.
+
+Bug reports as well as comments or contributions should be sent to the author
+of Eukleides, Christian Obrecht
+(@code{obrecht @var{at} eukleides @var{dot} org}).
+
+@c -----------------------------------------------------------------------------
+
+@node General Syntax, Numbers, Introduction, Top
+
+@chapter Basics
+
+@section General Syntax
+
+@cindex encoding
+Eukleides source files should be ISO 8859-1 encoded text files. Line breaks can
+be either in DOS, Mac OS or Unix format.
+
+Eukleides code consists in directives, statements and comments.
+
+@cindex directives
+Directives are one-line special instructions starting with either the number
+sign (@numb{}) or the at sign (@@).
+
+@cindex statements
+@cindex commands
+Statements end in a semi-colon or a line break. Runs of white space are ignored.
+A statement may be written on more than one line using a backslash (\) as line
+continuation character. Statements are either assignments or commands. Command
+parameters require no parentheses, which differs from the syntax of the first
+version of the language.
+
+@cindex comments
+Comments start with a percent sign (@verb{.%.}) and run to the end of the line.
+
+@cindex identifiers
+Identifiers are case sensitive. Valid symbols in identifiers are letters,
+underscore (@verb{._.}), @w{ISO 8859-1} accented letters (@code{0xC0} to
+@code{0xFF}, except @code{0xD7} and @code{0xF7}) and (except for the first
+character) digits and single quote (@verb{.'.}).
+
+Default keywords are taken from the English vocabulary, hence contain only
+unaccented letters, but localized keywords may contain accented letters as well.
+
+@cindex variables
+@findex clear
+A variable may contain any type of data: number, string, point, vector, set,
+line, circle or conic. Assignments to single variables are made using the equal
+sign (@verb{.=.}). A variable in use may be unset using the @code{clear}
+command.
+
+@cindex angular parameters
+Angular parameters may be given either in degrees or radians. An angle measure
+consists in a number followed by either the @code{deg} keyword or a colon
+(@verb{.:.}) or a degree sign (@deg{}) for degrees or by the @code{rad} keyword
+for radians. Usage of colons is deprecated.
+
+In this manual, optional parameters are enclosed in braces.
+
+@c -----------------------------------------------------------------------------
+
+@node Numbers, Strings, General Syntax, Top
+
+@section Numbers
+
+@cindex number format
+Numbers are stored in double precision floating point format.
+
+@cindex integers
+There's no integer type. Whenever an integer argument is expected, the passed
+value is truncated.
+
+@cindex constant numbers
+Constant numbers consist in decimal digits and possibly a decimal dot. The dot
+may start the sequence; in this case the first digit is assumed to be a zero.
+
+@cindex numeric operators
+@findex mod
+
+@subheading Numeric operators
+
+@table @code
+@item x + y
+Sum of @math{x} and @math{y}.
+@item x - y
+Difference of @math{x} and @math{y}.
+@item x * y
+Product of @math{x} and @math{y}.
+@item x / y
+Quotient of @math{x} and @math{y}.
+@item x ^ y
+@math{x} to the power @math{y}.
+@item x mod y
+Remainder after division of @math{x} by @math{y}.
+@end table
+
+@cindex numeric functions
+@findex sqrt
+@findex exp
+@findex ln
+@findex sin
+@findex cos
+@findex tan
+@findex asin
+@findex acos
+@findex atan
+@findex deg
+@findex rad
+@findex abs
+@findex sign
+@findex ceil
+@findex floor
+@findex round
+@findex min
+@findex max
+@findex clamp
+
+@subheading Numeric functions
+
+@table @code
+@item sqrt(x)
+Square root of @math{x}.
+@item exp(x)
+Base-e exponential of @math{x}.
+@item ln(x)
+Natural logarithm of @math{x}.
+@item sin(x), cos(x), tan(x)
+Sine, cosine, tangent of @math{x} degrees.
+@item asin(x), acos(x), atan(x)
+Arcsine, arccosine, arctangent of @math{x} (in degrees).
+@item deg(x)
+Radians to degrees conversion.
+@item rad(@math{x})
+Degrees to radians conversion.
+@item abs(x)
+Absolute value of @math{x}.
+@item sign(x)
+@math{-1} if @math{x < 0}, 0 if @math{x = 0}, 1 if @math{x > 0}.
+@item ceil(x)
+Smallest integral value greater than or equal to @math{x}.
+@item floor(x)
+Largest integral value less than or equal to @math{x}.
+@item round(x)
+Integral value nearest to @math{x}.
+@item min(x, y)
+Minimum of @math{x} and @math{y}.
+@item max(x, y)
+Maximum of @math{x} and @math{y}.
+@item clamp(x, y, z)
+@math{y} if @math{x < y}, @math{z} if @math{x > z}, @math{x} otherwise.
+@end table
+
+@cindex pi
+@findex pi
+
+@subheading Numeric constant
+
+@table @code
+@item pi
+Archimedes' constant.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Strings, Points, Numbers, Top
+
+@section Strings
+
+@cindex literal strings
+Literal strings must be enclosed in double quotes (") or dollar signs
+(@verb{.$.}). With @command{eukleides}, enclosing characters yield no difference
+but with @command{euktopst} dollar signs are taken as part of the string.
+Literal strings may be split in several lines.
+
+@cindex special characters
+
+@subheading Special characters
+
+@table @code
+@item %n
+Newline (LF).
+@item %r
+Return (CR).
+@item %t
+Tab.
+@item %"
+Double quote (when enclosing character).
+@item %$
+Dollar sign (when enclosing character).
+@item %%
+Percent sign.
+@end table
+
+@cindex string related functions
+@findex length
+@findex sub
+@findex cat
+
+@subheading String related functions
+
+@table @code
+@item length(s)
+Length of string @math{s}.
+@item sub(s, i, j)
+Substring of string @math{s} from index @math{i} to @math{j}. Indices start at
+0.
+@item cat(@var{list})
+Concatenates @var{list} into a single string, where @var{list} is a comma
+separated sequence of strings, numbers, points or sets. Numbers are formatted
+using at most 6 digits, with no trailing zeros or decimal point (i.e. the
+@verb{.%g.} format for @code{printf} in C). Points are converted to their Cartesian
+coordinates. With @command{eukleides} abscissa and ordinate are simply separated
+by a white space. With @command{euktopst} coordinates are formated in the usual
+mathematical way, using parenthesis and comma.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Points, Vectors, Strings, Top
+
+@chapter Objects
+
+@section Points
+
+@cindex points internal representation
+Points are stored using an implicit Cartesian coordinate system.
+
+@cindex point related functions
+@findex point
+@findex abscissa
+@findex ordinate
+@findex distance
+@findex barycenter
+
+@subheading Point related functions
+
+@table @code
+@item point(x, y)
+Point of Cartesian coordinates @math{(x, y)}.
+@item point(r, a)
+Point of polar coordinates @math{(r, a)}.
+@item abscissa(A)
+Abscissa of point @math{A}.
+@item ordinate(A)
+Ordinate of point @math{A}.
+@item distance(A, B)
+Distance between point @math{A} and point @math{B}.
+@item barycenter(@var{list})
+Barycenter of a set of weighted points. In the given list, each point has to be
+followed by its weight.
+@end table
+
+@exm{barycenter(A, 1, B, 3, C, 2)}.
+
+@c -----------------------------------------------------------------------------
+
+@node Vectors, Sets, Points, Top
+
+@section Vectors
+
+@cindex vectors internal representation
+Vectors are stored using their Cartesian coordinates.
+
+@cindex vector operators
+
+@subheading Vector operators
+
+@table @code
+@item u + v
+Sum of @math{u} and @math{v}.
+@item u - v
+Difference of @math{u} and @math{v}.
+@item k * u
+Scalar product of @math{u} by @math{k}.
+@item u / k
+Scalar quotient of @math{u} by @math{k}.
+@item u * v
+Dot product of @math{u} and @math{v}.
+@end table
+
+@cindex vector related functions
+@findex vector
+@findex abscissa
+@findex ordinate
+@findex length
+@findex arg
+@findex angle
+
+@subheading Vector related functions
+
+@table @code
+@item vector(x, y)
+Vector of Cartesian coordinates @math{(x, y)}.
+@item vector(r, a)
+Vector of polar coordinates @math{(r, a)}.
+@item vector(A, B)
+Vector going from point @math{A} to point @math{B}.
+@item abscissa(u)
+Abscissa of @math{u}.
+@item ordinate(u)
+Ordinate of @math{u}.
+@item length(u)
+Length of @math{u}.
+@item arg(u)
+Polar angle of @math{u} (in degrees).
+@item angle(u, v)
+Angle between @math{u} and @math{v} (in degrees).
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Sets, Lines, Vectors, Top
+
+@section Sets
+
+@cindex sets
+A set consists in a finite ordered list of points. Thus a set can also be seen
+as an open path of line segments or as a polygon.
+
+@cindex segments
+A set of two points is considered as a single line segment. When a parameter is
+expected to be a segment, any subsequent point is ignored.
+
+@cindex set operators
+
+@subheading Set operators
+
+@table @code
+@item s.t
+Concatenates @math{s} and @math{t}. Each operand can be either a set or a
+point.
+@item s[i]
+Point of index @math{i} in variable @math{s}, assuming @math{s} contains a set.
+Indices start at 0.
+@end table
+
+@cindex set related functions
+@findex set
+@findex card
+@findex length
+@findex perimeter
+@findex area
+@findex arg
+@findex point
+@findex midpoint
+@findex bisector
+@findex isobarycenter
+@findex centroid
+@findex element
+@findex vector
+@findex sub
+@findex polygon
+@findex pentagon
+@findex hexagon
+
+@subheading Set related functions
+
+@table @code
+@item set(P)
+Singleton containing point @math{P}.
+@item card(s)
+Number of elements of set @math{s}.
+@item length(s)
+Length of path @math{s}.
+@item perimeter(s)
+Perimeter of polygon @math{s}.
+@item area(s)
+Area enclosed by polygon @math{s}, provided @math{s} is not self-intersecting.
+@item arg(s)
+Polar angle of segment @math{s} (in degrees).
+@item point(s, x)
+Point of abscissa @math{x} on an axis containing segment @math{s}. The point is
+on segment @math{s} when @math{x} ranges from 0 to 1.
+@item midpoint(s)
+Midpoint of segment @math{s}.
+@item bisector(s)
+Perpendicular bisector of segment @math{s}.
+@item isobarycenter(s)
+Isobarycenter of set @math{s}.
+@item centroid(s)
+Centroid of polygon @math{s}.
+@item element(s, i)
+Point of index @math{i} in set @math{s}.
+@item vector(s)
+Vector going from first to second point of segment @math{s}.
+@item sub(s, i, j)
+Subset of set @math{s} from index @math{i} to @math{j}.
+@item polygon(n, O, r, a)
+@itemx pentagon(O, r, a)
+@itemx hexagon(O, r, a)
+Vertices of a @math{n}-sided (or 5-sided or 6-sided) convex regular polygon of
+center @math{O}. The first point has @math{(r, a)} as polar coordinates
+with respect to @math{O}. The vertices are ordered anticlockwise.
+@end table
+
+@cindex empty set
+@findex empty
+
+@subheading Set constant
+
+@table @code
+@item empty
+Empty set.
+@end table
+
+@cindex set related assignments
+
+@subheading Set related assignments
+
+Each element of a variable containing a set may be modified individually using
+its index enclosed in square brackets.
+
+@exm{S[1] = point(2, pi/3)}
+
+When using empty square brackets, the given point is added to the tail of the
+set.
+
+@exm{S[] = point(0, 0)}
+
+Several elements of a set may be assigned at once to a dot separated list of
+variables. Exceeding points, if any, are ignored.
+
+@exm{A.B.C.D.E = pentagon(O, 1, 0@deg{})}
+
+@c -----------------------------------------------------------------------------
+
+@node Lines, Circles, Sets, Top
+
+@section Lines
+
+@cindex lines
+A line is internally represented by an origin point and an angular direction,
+i.e. the anticlockwise angle from the horizontal axis to the line. Thus, lines
+have an implicit orientation.
+
+@cindex line related functions
+@findex line
+@findex parallel
+@findex perpendicular
+@findex bisector
+@findex distance
+@findex arg
+@findex point
+@findex abscissa
+@findex ordinate
+@findex vector
+
+@subheading Line related functions
+
+@table @code
+@item line(A, a)
+Line of origin @math{A} and direction @math{a}.
+@item line(A, B)
+Line of origin @math{A}, passing through point @math{B}.
+@item line(A, u)
+Line of origin @math{A}, directed by vector @math{u}.
+@item line(s)
+Line passing through segment @math{s}. The origin is set to the first
+point of @math{s}.
+@item parallel(l, A)
+Parallel to line @math{l} of origin @math{A}.
+@item parallel(s, A)
+Parallel to segment @math{s} of origin @math{A}.
+@item perpendicular(l, A)
+Perpendicular to line @math{l} of origin @math{A}.
+@item perpendicular(s, A)
+Perpendicular to segment @math{s} of origin @math{A}.
+@item bisector(l, l')
+Bisector of lines @math{l} and @math{l'}. The resulting angular direction is the mean
+of the directions of @math{l} and @math{l'}.
+@item distance(A, l)
+Distance between point @math{A} and line @math{l}.
+@item arg(l)
+Polar angle of line @math{l} (in degrees).
+@item point(l, x)
+Point of abscissa @math{x} on line @math{l} with respect to its implicit origin
+and orientation.
+@item abscissa(l, x)
+Point of abscissa @math{x} on line @math{l} with respect to the implicit
+coordinate system.
+@item ordinate(l, y)
+Point of ordinate @math{y} on line @math{l} with respect to the implicit
+coordinate system.
+@item vector(l)
+Unit vector having the same direction than line @math{l}.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Circles, Conics, Lines, Top
+
+@section Circles
+
+@cindex circles
+A circle is internally represented by its center and radius.
+
+@cindex circle related functions
+@findex circle
+@findex radius
+@findex perimeter
+@findex area
+@findex arg
+@findex point
+@findex center
+@findex line
+
+@subheading Circle related functions
+
+@table @code
+@item circle(A, x)
+Circle of center @math{A} and radius @math{x}.
+@item circle(s)
+Circle of diameter @math{s}.
+@item radius(c)
+Radius of circle @math{c}.
+@item perimeter(c)
+Perimeter of circle @math{c}. 
+@item area(c)
+Area enclosed in circle @math{c}. 
+@item arg(A, c)
+Polar angle of point @math{A} with respect to the center of @math{c} (in
+degrees).
+@item point(c, a)
+Point on @math{c} with polar angle @math{a} with respect to its center.
+@item center(c)
+Center of circle @math{c}.
+@item line(c, a)
+Tangent line to circle @math{c}. The contact point has polar angle @math{a}
+with respect to the center of @math{c}.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Conics, Transformations, Circles, Top
+
+@section Conics
+
+@cindex conics
+@cindex parametric representation of conics
+An ellipse is internally represented by its center, major axis, minor
+axis and direction of its major axis. The associated parametric
+representation in the coordinate system defined by its axis is :
+
+@tex
+$$\left\{
+\eqalign{
+x &= a\cos(t)\cr
+y &= b\sin(t)\cr
+}\right.$$
+
+\noindent
+where $a$ is the major axis, $b$ is the minor axis and $t$ ranges from $-\pi$ to
+$\pi$.
+@end tex
+
+@ifnottex
+x = a cos(t) and y = b sin(t)
+
+@noindent
+where a is the major axis, b is the minor axis and t ranges from -pi to pi.
+@end ifnottex
+
+An hyperbola is internally represented by its center, real axis, imaginary
+axis and direction of its real axis. The associated parametric
+representation in the coordinate system defined by its axis is :
+
+@tex
+$$\left\{
+\eqalign{
+x &= {a\over\sin(t)}\cr
+y &= {b\over\tan(t)}\cr
+}\right.$$
+
+\noindent
+where $a$ is the real axis, $b$ is the imaginary axis and $t$ ranges from $-\pi$
+to $\pi$ except 0.
+@end tex
+
+@ifnottex
+x = a/sin(t) and y = b/tan(t)
+
+@noindent
+where a is the real axis, b is the imaginary axis and t ranges from -pi to pi
+except 0.
+@end ifnottex
+
+A parabola is represented by its focus, parameter and the direction of its
+axis. The associated parametric representation is :
+
+@tex
+$$\left\{
+\eqalign{
+x &= {-{p\cos(t)\over1+\cos(t)}}\cr
+y &= {-{p\sin(t)\over1+\cos(t)}}\cr
+}\right.$$
+
+\noindent
+where $p$ is the parameter and $t$ ranges from $-\pi$ to $\pi$. The
+corresponding coordinate system uses the focus as origin and the axis of the
+parabola as ordinate axis.
+@end tex
+
+@ifnottex
+x = - p cos(t)/(1 + cos(t)) and y = - p sin(t)/(1 + cos(t))
+
+@noindent
+where p is the parameter and t ranges from -pi to pi. The corresponding
+coordinate system uses the focus as origin and the axis of the parabola as
+ordinate axis.
+@end ifnottex
+
+@cindex conic related functions
+@findex ellipse
+@findex hyperbola
+@findex parabola
+@findex conic
+@findex major
+@findex minor
+@findex eccentricity
+@findex arg
+@findex point
+@findex center
+@findex foci
+@findex line
+
+@subheading Conic related functions
+
+@table @code
+@item ellipse(A, x, y, a)
+Ellipse of center @math{A}, major axis @math{x}, minor axis @math{y}. The
+direction of the major axis is @math{a}.
+@item hyperbola(A, x, y, a)
+Hyperbola of center @math{A}, real axis @math{x}, imaginary axis @math{y}. The
+direction of the real axis is @math{a}.
+@item parabola(A, x, a)
+Parabola of summit @math{A} and parameter @math{x}. The direction of its axis
+is @math{a}.
+@item parabola(A, l)
+Parabola of focus @math{A} and directrix @math{l}.
+@item conic(A, l, x)
+Conic of focus @math{A}, directrix @math{l} and eccentricity @math{x}.
+@item conic(A, B, x)
+Conic of foci @math{A} and @math{B} and eccentricity @math{x}.
+@item major(c)
+Major axis of conic @math{c} if @math{c} is an ellipse, real axis if @math{c}
+is an hyperbola, parameter if @math{c} is a parabola.
+@item minor(c)
+Minor axis of conic @math{c} if @math{c} is an ellipse, imaginary axis if
+@math{c} is an hyperbola, 0 if @math{c} is a parabola.
+@item eccentricity(c)
+Eccentricity of conic @math{c}.
+@item arg(c)
+Polar angle of the major axis of @math{c} if @math{c} is an ellipse, of the real
+axis if @math{c} is an hyperbola, of the axis if @math{c} is a parabola (in
+degrees).
+@item arg(A, c)
+Argument of point @math{A} on conic @math{c} with respect to its parametric
+representation. If @math{A} is not on @math{c} this function uses the
+projection of @math{A} on @math{c} with respect to its center for centered
+conics or its focus for parabolas.
+@item point(c, a)
+Point on conic @math{c} of argument @math{a} with respect to its parametric
+representation.
+@item center(c)
+Center of centered conic @math{c}.
+@item foci(c)
+Set containing the foci of conic @math{c}.
+@item line(c, a)
+Tangent line to conic @math{c}. The contact point has argument @math{a}
+with respect to the parametric representation of @math{c}.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Transformations, Intersections, Conics, Top
+
+@chapter Geometry
+
+@section Transformations
+
+@cindex transformations
+Transformations consist in either generic transformations, which can be applied
+on any kind of geometric objects, or projections, which are only defined for
+points.
+
+@cindex generic transformations
+@findex translation
+@findex reflection
+@findex symmetric
+@findex rotation
+@findex homothecy
+
+@subheading Generic transformations
+
+@table @code
+@item translation(o, u)
+Translation of object @math{o} using vector @math{u}.
+@item reflection(o, l)
+Reflection of object @math{o} with respect to line @math{l}.
+@item symmetric(o, A)
+Symmetric (i.e. 180@mdeg{} rotation) of object @math{o} with respect to point
+@math{A}.
+@item rotation(o, A, a)
+Rotation of object @math{o} with respect to point @math{A}, using angle @math{a}.
+@item homothecy(o, A, x)
+Homothecy (i.e. reduction or dilation) of object @math{o} with respect to point
+@math{A}, using scale @math{x}.
+@end table
+
+@cindex projections
+@findex projection
+
+@subheading Projections
+
+@table @code
+@item projection(A, l)
+Orthogonal projection of point @math{A} on line @math{l}.
+@item projection(A, l, l')
+Projection of point @math{A} on line @math{l} using direction of line @math{l'}.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Intersections, Triangles, Transformations, Top
+
+@section Intersections
+
+@cindex intersections
+Intersection functions provide the points belonging to both of two given
+geometric objects. Sets are considered as open paths. For line-line intersections
+the function is point valued, otherwise it is set valued.
+
+@findex intersection
+
+@subheading Intersection functions
+
+@table @code
+@item intersection(l, l')
+Intersection of line @math{l} and line @math{l'}. Parallel lines cause an error.
+@item intersection(l, s)
+Intersection of line @math{l} and set @math{s}.
+@item intersection(l, c)
+Intersection of line @math{l} and circle or conic @math{c}.
+@item intersection(s, s')
+Intersection of set @math{s} and set @math{s'}.
+@item intersection(c, c')
+Intersection of circle @math{c} and circle @math{c'}.
+@item intersection(c, s)
+Intersection of circle @math{c} and set @math{s}.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Triangles, Quadrilaterals, Intersections, Top
+
+@section Triangles
+
+@cindex triangular assignments
+Triangular assignments consist in a list of three variable names followed by
+either @code{triangle}, @code{right}, @code{isosceles} or @code{equilateral},
+and some optional parameters.
+
+@exm{A B C triangle 6, 5, 4, 0@deg}
+
+In the following, we will use letter @math{x} for the first side of the
+triangle, i.e. the segment joining the first and the second vertices, @math{y}
+for the second side, i.e. the segment joining the second and the third vertices,
+and @math{z} for the third side. Likewise, we will use letter @math{u} for the
+first angle, @math{v} for the second angle, and @math{a} for the direction of
+the first side.
+
+In a triangular assignment one or two vertices may be predefined, i.e. the first
+or the first and the second variables already contain points. If no vertices are
+predefined then the first variable is set to the origin of the implicit
+coordinate system. The direction of the first side is horizontal unless
+specified by an angular value at the end of the parameter list. If two vertices
+are predefined then the parameters giving the length and the orientation of the
+first side have to be omitted.
+
+If no parameter is given, the length of the first side is set to 6.
+ 
+@findex triangle
+@subheading Generic triangles
+
+@table @code
+@item triangle @{ x @{ , a @} @}
+@item triangle @{ x, @} y, z @{ , a @}
+@item triangle @{ x, @} u, v @{ , a @}
+@item triangle @{ x, @} u, z @{ , a @}
+@item triangle @{ x, @} z, v @{ , a @}
+@end table
+
+The first assignment yields an optimal scalene triangle.
+
+@findex right
+@subheading Right triangles
+
+@table @code
+@item right @{ x @{ , a @} @}
+@item right @{ x, @} y @{ , a @}
+@item right @{ x, @} u @{ , a @}
+@end table
+
+With these assignments the resulting triangle has a right angle at its second
+vertex. The first assignment yields a right triangle with sides proportional to
+4-3-5.
+
+@findex isosceles
+@subheading Isosceles triangles
+
+@table @code
+@item isosceles @{ x @{ , a @} @}
+@item isosceles @{ x, @} y @{ , a @}
+@item isosceles @{ x, @} u @{ , a @}
+@end table
+
+With these assignments the resulting triangle is isosceles at its third vertex.
+The first assignment yields a golden triangle.
+
+@findex equilateral
+@subheading Equilateral triangles
+
+@table @code
+@item equilateral @{ x @{ , a @} @}
+@end table
+
+@subheading Triangle related functions
+
+@findex angle
+@findex height
+@findex orthocenter
+@findex altitude
+@findex bisector
+@findex median
+@findex circle
+@findex incircle
+
+@table @code
+@item angle(A, B, C)
+Degree measure of angle @math{ABC}.
+@item height(A, B, C)
+Height of triangle @math{ABC} with respect to vertex A.
+@item orthocenter(A, B, C)
+Orthocenter of triangle @math{ABC}.
+@item altitude(A, B, C)
+Altitude of triangle @math{ABC} with respect to vertex A.
+@item bisector(A, B, C)
+Bisector of angle @math{ABC}.
+@item median(A, B, C)
+Median of triangle @math{ABC} with respect to vertex A.
+@item circle(A, B, C)
+Circumcircle of triangle @math{ABC}.
+@item incircle(A, B, C)
+Incircle of triangle @math{ABC}.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Quadrilaterals, Locus Assignments, Triangles, Top
+
+@section Quadrilaterals
+
+@cindex quadrilateral assignments
+Quadrilateral assignments consist in a list of four variable names followed by
+either @code{parallelogram}, @code{rectangle} or @code{square}, and some
+optional parameters.
+
+@exm{A B C D parallelogram 6, 3, 60@deg}
+
+In the following, we will use letter @math{x} for the first side of the
+quadrilateral, i.e. the segment joining the first and the second vertices,
+@math{y} for the fourth side, i.e. the segment joining the first and the fourth
+vertices, @math{u} and @math{v} the corresponding vectors. Likewise, we will use
+letter @math{a} for the first angle, and @math{b} for the angular direction of
+the first side.
+
+In quadrilateral assignments, one, two or three vertices may be predefined. Like
+with triangular assignments, if no vertices are predefined then the first
+variable is set to the origin of the implicit coordinate system. The direction
+of the first side is horizontal unless specified by an angular value at the end
+of the parameter list. If two vertices are predefined then the parameters
+giving the length and the orientation of the first side have to be omitted. If
+three vertices are predefined then only @code{parallelogram} is valid.
+
+@findex parallelogram
+@findex rectangle
+@findex square
+
+@subheading Generic quadrilateral assignments
+
+@table @code
+@item parallelogram @{ x, @} y, a @{ , b @}
+@item rectangle @{ x, @} y, @{ , b @}
+@item square @{ x @{ , b @} @}
+@end table
+
+@subheading Default quadrilateral assignments
+
+Default assignments, i.e. assignments without parameters, are only valid with at
+most one predefined vertex.
+
+@table @code
+@item parallelogram
+Assigns a parallelogram such as @math{x = 5}, @math{y = 4} and
+@math{a = 75}@mdeg{}.
+@item rectangle
+Assigns a golden rectangle such as @math{x = 6}.
+@item square
+Assigns a square such as @math{x = 4}.
+@end table
+
+@subheading Vector based quadrilateral assignment
+
+This assignment is only valid with at most one predefined vertex.
+
+@table @code
+@item parallelogram u, v, a
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Locus Assignments, Drawing Commands, Quadrilaterals, Top
+
+@section Locus Assignments
+
+@cindex locus assignments
+@findex put
+
+A locus assignment is useful to generate a set of points giving an approximation
+of a locus. It consists in a locus statement followed by a block of instructions
+delimited by @code{end}. The instruction block must contain a put statement,
+i.e. the @code{put} keyword followed by a point-valued expression. The syntax
+for locus statements is:
+
+@findex locus
+@findex step
+@example
+locus l(t = a to b @{ step n @})
+@end example
+
+The associated instruction block is repeated @math{n} times with values of
+number @math{t} increasing from @math{a} to @math{b}. Each put statement appends
+a point to the resulting set @math{l}. Default value for @math{n} is 120.
+
+@subheading Examples
+
+@indent
+A cardioid.
+
+@example
+locus C(t = 0 to 360)
+  put point(sin(t/2), t@deg{})
+end
+@end example
+
+A quadratrix generated from the intersection of two uniformly-moving lines: one
+angular, one linear (original script by Robert D. Goulding).
+
+@example
+locus q(t = 10^-3 to 1)
+  l1 = line(point(0, 0), t*pi/2 rad)
+  l2 = line(point(0, t), 0 rad)
+  put intersection(l1, l2)
+end
+@end example
+
+@c -----------------------------------------------------------------------------
+
+@node Drawing Commands, Label Commands, Locus Assignments, Top
+
+@chapter Drawing
+
+@section Drawing Commands
+
+@cindex drawing
+
+@findex draw
+A drawing command is either a single or a multiple drawing statement. A single
+drawing statement consists in the @code{draw} keyword followed by a drawable
+object and a possibly empty comma separated list of aspect parameters.
+
+@exm{draw point(2, 3) red}
+
+A multiple drawing statement consists in the @code{draw} keyword followed by a
+list of global aspect parameters and a list of drawable objects (with possibly
+local aspect parameters) delimited by @code{end}.
+
+@exmp{}
+
+@example
+draw blue
+  A.B
+  C.D dashed, black
+  E.F dotted
+end
+@end example
+
+Local parameters override global ones.
+
+@subheading Aspect parameters
+
+@cindex color
+@cindex scale factor
+@cindex point shape
+@cindex line style
+@cindex partition
+@cindex direction
+@cindex endings
+@cindex font
+@findex black
+@findex darkgray
+@findex gray
+@findex lightgray
+@findex white
+@findex red
+@findex green
+@findex blue
+@findex cyan
+@findex magenta
+@findex yellow
+@findex dot
+@findex disc
+@findex box
+@findex plus
+@findex cross
+@findex full
+@findex dashed
+@findex dotted
+@findex entire
+@findex half
+@findex forth
+@findex back
+@findex none
+@findex arrow
+@findex arrows
+@findex font
+
+@table @cite
+@item Color
+@code{black} (default), @code{darkgray}, @code{gray}, @code{lightgray},
+@code{white}, @code{red}, @code{green}, @code{blue}, @code{cyan},
+@code{magenta}, @code{yellow}.
+@item Scale factor
+A number greater than 0 (default: 1).
+@item Point shape
+@code{dot} (default), @code{disc}, @code{box}, @code{plus}, @code{cross}.
+@item Line style
+@code{full} (default), @code{dashed}, @code{dotted}.
+@item Partition
+@code{entire} (default), @code{half}.
+@item Direction
+@code{forth} (default), @code{back}.
+@item Endings
+@code{none} (default), @code{arrow}, @code{arrows}.
+@item Conics draw step
+An angular parameter (default: 3@deg{}) setting the current drawing step
+(with respect of the parametric representation).
+@item Font
+@code{font(@var{s})} where @var{s} is a string containing the font description.
+@end table
+
+@subheading Font description
+
+With @command{eukleides} the font description string has to follow the standard
+PostScript format, i.e. @code{"@var{name}-@var{face}-@var{size}"}.
+
+@exm{"Helvetica-Bold-12"}
+
+The default font is @code{"NewCenturySchlbk-Roman-10"}.
+
+With @command{euktopst} the font description string should be a sequence of
+parameterless commands (without the leading backslash) appropriate to the @TeX{}
+format in use, e.g. @code{"bf"} with plain @TeX{} or @code{"sffamily\bfseries"}
+with @LaTeX{}.
+
+@subheading Single drawing statements
+
+@table @code
+@item draw A @var{list}
+Draws point @math{A}, where @var{list} may contain color, scale and shape
+parameters.
+@item draw v O @var{list}
+Draws vector @math{v} from point @math{O}, where @var{list} may contain color,
+scale and style parameters. The scale factor determines the line thickness.
+@item draw s @var{list}
+Draws the open path corresponding to set @math{s}, where @var{list} may contain
+color, scale, style, direction and endings parameters.
+@item draw (s) @var{list}
+Draws the polygon corresponding to set @math{s}, where @var{list} may contain
+color, scale, style, direction and endings parameters.
+@item draw [s] @{ @var{color} @}
+Fills the polygon corresponding to set @math{s}.
+@item draw [s] a @var{list}
+Hatches the polygon corresponding to set @math{s}, where @var{list} may contain
+color and scale parameters. The angular parameter @math{a} determines the
+direction of the hatches. The scale factor determines the spacing of the
+hatches (default: 1.5 mm).
+@item draw l @var{list}
+Draws line @math{l} where @var{list} may contain color, scale, style, partition
+and direction parameters. Using @code{half} yields the ray having same origin
+and direction than line @math{l}, using both @code{half} and @code{back} yields
+the ray with reverse direction.
+@item draw c @var{list}
+Draws circle @math{c} where @var{list} may contain color, scale and style
+parameters.
+@item draw c a b @var{list}
+Draws arc of circle @math{c} from polar angle @math{a} to polar angle @math{b}
+(with respect to the center of @math{c}) where @var{list} may contain color,
+scale, style, direction and endings parameters.
+@item draw [c] @{ @var{color} @}
+Fills circle @math{c}.
+@item draw [c] a @var{list}
+Hatches circle @math{c} where @var{list} may contain color and scale
+parameters. The angular parameter @math{a} determines the direction of the
+hatches. The scale factor determines the spacing of the hatches (default: 1.5 mm).
+@item draw c @var{list}
+Draws conic @math{c} where @var{list} may contain color, scale, style and step
+parameters.
+@item draw c a b @var{list}
+Draws conic @math{c} from argument @math{a} to argument @math{b} (with respect
+to the parametric representation of @math{c}) where @var{list} may contain
+color, scale, style, direction, endings and step parameters.
+@item draw l A a @var{list}
+Writes string @math{l} with respect to point @math{A} in direction @math{a},
+where @var{list} may contain color, scale and font parameters. The scale factor
+determines the distance from the center of the string to the point.
+@item draw l s a @var{list}
+Writes string @math{l} with respect to the middle of segment @math{s} in
+direction @math{a}, where @var{list} may contain color, scale and font
+parameters. The scale factor determines the distance from the center of the
+string to the middle of the segment (default: 3 mm). 
+@end table
+
+@subheading Output setting commands
+
+@findex scale
+@findex box
+@findex frame
+
+@table @code
+@item scale z
+Sets the value of the length unit. (Default: 1 cm.)
+@item box x, y, x', y' @{ , z @} 
+@itemx frame x, y, x', y' @{ , z @}
+Sets the coordinates of the lower left and upper right corner of the drawing
+frame, with optional scale factor @math{z}. Default coordinates are
+@math{(-2, -2)} and @math{(8, 6)}. With @command{eukleides} and
+@command{euktopst}, both commands yield the same result.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Label Commands, Input and Output, Drawing Commands, Top
+
+@section Label Commands
+
+@cindex labeling
+@findex label
+
+Label commands are useful to mark segments or angles with usual symbols, or to
+write point names. As for drawing commands, a label command is either a single
+or a multiple statement.
+
+@exm{label B.C double}
+
+@exmp{}
+
+@example
+label blue
+  A.B 
+  B.C cross, black
+  E.F double
+end
+@end example
+
+Local parameters override global ones.
+
+@subheading Label parameters
+
+@cindex segment mark shape
+@cindex angle mark
+@cindex color
+@cindex scale factor
+@cindex font
+@findex simple
+@findex double
+@findex triple
+@findex cross
+@findex right
+@findex forth
+@findex none
+@findex dashed
+@findex dotted
+@findex back
+@findex black
+@findex darkgray
+@findex gray
+@findex lightgray
+@findex white
+@findex red
+@findex green
+@findex blue
+@findex cyan
+@findex magenta
+@findex yellow
+
+@table @cite
+@item Segment mark shape
+@code{simple} (default), @code{double}, @code{triple}, @code{cross}.
+@item Angle mark shape
+@code{simple} (default), @code{double}, @code{triple}, @code{right}, @code{forth},
+@code{back}.
+@item Angle mark decoration
+@code{none} (default), @code{dotted}, @code{dashed}.
+@item Color
+@code{black} (default), @code{darkgray}, @code{gray}, @code{lightgray},
+@code{white}, @code{red}, @code{green}, @code{blue}, @code{cyan},
+@code{magenta}, @code{yellow}.
+@item Scale factor
+A number greater than 0 (default: 1).
+@item Font
+@code{font(@var{s})} where @var{s} is a string containing the font description.
+@end table
+
+@subheading Single label statements
+
+@table @code
+@item label s @var{list}
+Marks segment @math{s} where @var{list} may contain shape, color and scale
+parameters.
+@item label B, A, C @var{list}
+Marks angle @math{BAC} (i.e. angle from ray @math{AB} to ray @math{AC} in
+anticlockwise direction) where @var{list} may contain shape, decoration, color
+and scale parameters. The @code{forth} and @code{back} shape yield arrowed
+angle marks (respectively in direct and reverse direction). The @code{dotted}
+decoration adds a dot inside the angle mark. The @code{dashed} decoration adds a
+tick on the angle mark.
+@item label P a @var{list}
+Assuming variable @math{P} contains a point, writes the name of @math{P} in
+direction @math{a} from @math{P}, where @var{list} may contain color, scale and
+font parameters. The scale factor determines the distance from the center of the
+label to the point (default: 3 mm).
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Input and Output, Conditional Statements, Label Commands, Top
+
+@chapter Programming
+
+@section Input and Output
+
+@cindex input command
+@findex read
+@findex close
+
+@subheading Input commands
+
+@table @code
+@item read s
+Opens the file whose name is string @math{s} for reading.
+@item close
+Closes the previously opened data file.
+@end table
+
+Standard input is used unless a data file is specified at command line
+invocation or open for reading.
+
+@cindex input functions
+@findex number
+@findex string
+
+@subheading Input functions
+
+@table @code
+@item number(s)
+Reads a number from current input.
+@item string(s)
+Reads a string from current input.
+@end table
+
+String @math{s} is used as a prompt.
+
+@exmp{}
+
+@example
+l = number("Length? ")
+w = number("Width? ")
+draw rectangle(l, w)
+@end example
+
+When running in batch mode with no defined data file, the @command{number}
+function returns 0 and the @command{string} function returns the empty string. 
+
+@cindex output commands
+@cindex printable objects
+@cindex file output
+@findex write
+@findex append
+@findex release
+@findex print
+@findex error
+@findex output
+
+@subheading Output commands
+
+Output commands take a comma separated list of printable objects as arguments.
+Printable objects are strings, numbers, points and sets. They are formatted the
+same way as for conversion to string.
+
+@table @code
+@item write s
+Opens the file whose name is string @math{s} for writing. If the file exists, its
+content will be overwritten. Otherwise, it is created.
+@item append s
+Opens the file whose name is string @math{s} for appending. The file is created
+if it does not exist. Writing starts at the end of the file.
+@item release
+Closes previously opened result file.
+@item print @var{list}
+Writes @var{list} to current result file, or to standard output if none is open.
+@item error @var{list}
+Writes @var{list} to standard error stream.
+@item output @var{list}
+Writes @var{list} to output file. This may be useful to include low level
+PostScript or PSTricks command invocations.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Conditional Statements, Iterative Statements, Input and Output, Top
+
+@section Conditional Statements
+
+@cindex conditional statements
+@cindex assertions
+@findex if
+@findex else
+@findex elseif
+
+Syntax for conditional statement is:
+
+@example
+if @var{assertion} @var{block} @c
+@{ @{ elseif  @var{assertion} @var{block} @} @dots{} @c
+else @var{block} @} end
+@end example
+
+@exmp{}
+
+@example
+if x < 0
+  print "x is negative."
+elseif x > 0
+  print "x is positive."
+else
+  print "x is null."
+end
+@end example
+
+@findex stop
+Using the @code{stop} command within a conditional statement allows to abort the
+execution of a script when some condition is met.
+
+@subheading Boolean operators
+
+@findex not
+@findex and
+@findex or
+
+@table @code
+@item not a
+Negation of assertion @math{a}.
+@item a and b
+Disjunction of assertions @math{a} and @math{b}.
+@item a or b
+Conjunction of assertions @math{a} and @math{b}.
+@end table
+
+@subheading Boolean constants
+
+@findex true
+@findex false
+
+@table @code
+@item true
+@item false
+@end table
+
+@subheading Comparison operators
+
+@table @code
+@item a == b
+Checks whether objects @math{a} and @math{b} are equal, i.e. have the same
+internal representation. Objects may be numbers, strings, points, vectors, sets,
+lines, circles or conics.
+@item a != b
+Negation of the former.
+@item x < y
+@itemx x <= y
+@itemx x > y
+@itemx x >= y
+Comparison of numbers @math{x} and @math{y}.
+@end table
+
+@subheading Set assertions
+
+@findex in
+@findex empty
+
+@table @code
+@item A in s
+Checks whether point @math{A} belongs to set @math{s}.
+@item empty(s)
+Checks for emptiness of set @math{s}.
+@end table
+
+@subheading Geometric assertions
+
+@findex on
+@findex collinear
+@findex parallel
+@findex perpendicular
+@findex ellipse
+@findex hyperbola
+@findex parabola
+@findex isosceles
+@findex equilateral
+@findex right
+@findex parallelogram
+@findex rectangle
+@findex square
+
+@table @code
+@item A on s
+Checks whether point @math{A} is on object @math{s}, where @math{s} may be a set
+(considered as an open path), a line, a circle or a conic.
+@item collinear(A, B, C)
+Checks whether points @math{A}, @math{B} and @math{C} are collinear.
+@item collinear(u, v)
+Checks whether vectors @math{u} and @math{v} are collinear,  i.e. have same or
+opposite directions.
+@item parallel(l, l')
+@itemx perpendicular(l, l')
+Direction comparison of lines @math{l} and @math{l'}.
+@item ellipse(c)
+@itemx hyperbola(c)
+@itemx parabola(c)
+Type checking of conic @math{c}.
+@item isosceles(A, B, C)
+@itemx equilateral(A, B, C)
+@itemx right(A, B, C)
+Type checking of triangle @math{ABC}.
+@item parallelogram(A, B, C, D)
+@itemx rectangle(A, B, C, D)
+@itemx square(A, B, C, D)
+Type checking of quadrilateral @math{ABCD}.
+@end table
+
+@subheading Output format flags
+
+@findex eps
+@findex pstricks
+@findex display
+
+@table @code
+@item eps
+True with @command{eukleides}.
+@item pstricks
+True with @command{euktopst}.
+@item display
+True within GUI.
+@end table
+
+@subheading Ternary operator
+
+@table @code
+@item @var{assertion} ? x | y
+Number @math{x} if @var{assertion} is true, number @math{y} otherwise.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node Iterative Statements, Function Definitions, Conditional Statements, Top
+
+@section Iterative Statements
+
+@cindex iterations
+@cindex foreach
+@findex while
+@findex for
+
+@table @code
+@item while @var{assertion} @var{block} end
+Repeats @var{block} while @var{assertion} is true.
+@item for i = a to b @{ step c @} @var{block} end
+Repeats @var{block} while incrementing number @math{i} by @math{c} (default: 1),
+from @math{a} to @math{b}. Numbers @math{b} and @math{c} are evaluated at each
+step. Iteration ends as soon as @math{i} is greater than or smaller than
+@math{b}, depending on the sign of @math{c}.
+@item for P in s @var{block} end
+Repeats @var{block} while point @math{P} runs through set @math{s}.
+@end table
+
+@exmp{}
+
+@example
+O = point(3,2)
+H = hexagon(O, 3, 0@deg{})
+draw (H)
+
+for P in H
+  draw O.P dotted
+end
+@end example
+
+@c -----------------------------------------------------------------------------
+
+@node Function Definitions, Modules, Iterative Statements, Top
+
+@section Function Definitions
+
+@cindex user defined commands
+@cindex user defined functions
+
+A command or function definition consists in a header followed by a block of
+instructions delimited by @code{end}.
+
+A command definition header consists in a command name followed by a comma
+separated parameter declaration list enclosed in parenthesis. A parameter
+declaration consists in a parameter type: @code{number}, @code{point},
+@code{vector}, @code{set}, @code{line}, @code{circle}, @code{conic} or
+@code{string}, followed by a parameter name. A function definition header is
+identical to a command definition header except that it starts with a return
+type.
+
+@findex return
+A function definition must contain at least a return statement, which consists
+in the @code{return} keyword followed by an appropriate expression. Command
+definitions may contain empty return statements.
+
+@exmp{}
+
+@example
+number square(number x)
+  return x*x
+end
+@end example
+
+@findex local
+Variables may be declared local to a command or function definition using the
+@code{local} keyword.
+
+@exmp{}
+
+@example
+vector conjugate(vector v)
+  local x, y
+  x = abscissa(v)
+  y = ordinate(v)
+  return vector(x, -y)
+end
+@end example
+
+@c -----------------------------------------------------------------------------
+
+@node Modules, Interactive Variables, Function Definitions, Top
+
+@section Modules
+
+@cindex include directives
+
+Eukleides scripts may be modular using include directives. An include directive
+consists in a line starting with the at sign (@@) followed without white space
+by the path to the file (either absolute or relative). To avoid circular
+references, only 20 levels of inclusion are allowed.
+
+@c -----------------------------------------------------------------------------
+
+@node Interactive Variables, Invocation, Modules, Top
+
+@section Interactive Variables
+
+@cindex interactive variables
+
+The GUI for the first version of the Eukleides language, named
+@command{xeukleides}, allowed to interactively modify the value of numeric
+variables using the keyboard. The planned GUI for the second version will have
+similar features.
+
+@subheading Mobile points
+
+@cindex mobile points
+A mobile point is a point-valued variable which is bound to a state (A to Z) and
+to the keyboard arrows. To switch to a given state, the user has to hit the
+corresponding key.
+
+Syntax for a mobile point declaration is:
+
+@findex mobile
+
+@table @code
+@item mobile @var{var} @{ (@var{state}) @} = @var{point}
+@item mobile @var{var} ( @{ @var{state}, @} z) = @var{point}
+@item mobile @var{var} ( @{ @var{state}, @} x, y, x', y' @{ , z @} ) = @var{point}
+@end table
+
+unless @var{var} already contains a point, in which case the initialisation
+part has to be omitted.
+
+A state identifier consists in the number sign (@numb{}) followed by the
+corresponding uppercase letter. When omitted, the variable is bound to the state
+corresponding to the first letter of its name. Number @math{z} is the amount by
+which the appropriate coordinate is incremented or decremented for each stroke
+on the arrow keys (default: 0.1). Numbers @math{x} and @math{x'} are the minimal
+and maximal abscissa, numbers @math{y} and @math{y'} are the minimal and maximal
+ordinate. By default there are no boundaries.
+
+@exm{mobile P_0(@numb{}A, 0.2)}
+
+@subheading Interactive numeric variables
+
+An interactive numeric variable is bound to a state (A to Z) and to either the
+horizontal or the vertical keyboard arrows.
+
+Syntax for interactive variable declaration is:
+
+@findex horizontal
+@findex vertical
+
+@table @code
+@item horizontal @var{variable} (@var{state} @{ , x, y @} @{ , z @}) = t 
+@item vertical @var{variable} (@var{state} @{ , x, y @} @{ , z @}) = t 
+@end table
+
+Numbers @math{x} and @math{y} are the lower and upper bound. By default there
+are no boundaries. Number @math{z} is the amount by which the variable is
+incremented or decremented (default: 0.1).
+
+@exm{horizontal x(@numb{}A, -1, 1)}
+
+@subheading Initialisation directives
+
+An initialisation directive is equivalent to keystrokes prior to execution. It
+consists in a single line starting with a number sign followed by a space
+separated list of pairs of letters and integers. Lowercase letters correspond to
+horizontal arrows, uppercase to vertical. Negative integers correspond to left
+or down directions, positive to right or up.
+
+@exm{@numb{} a 5 A 10 b -4}
+
+This initialisation directive is equivalent to 5 strokes on the right arrow key
+and 10 strokes on the up arrow key in A state and 4 strokes on the left arrow
+key in B state.
+
+An initialisation directive may also be given as a command-line parameter (using
+the @w{@code{--interactive}} option. If several initialisation directives are
+present, only the last one is taken into account.
+
+@subheading Animation
+
+With @command{eukleides}, the @w{@code{--animate}} option allows to generate
+PostScript files containing several pages which may be converted into animated
+GIFs (using ImageMagik's @command{convert} for instance). The parameter for this
+option consists in a single letter followed by an integer number (without
+space), with the same meaning as for initialisation directives.
+
+@exm{eukleides --animate=A20 figure.euk}
+
+The former command yields a 20 pages PostScript file, each step corresponding to
+a stroke on the up arrow key.
+
+@c -----------------------------------------------------------------------------
+
+@node Invocation, @TeX{}, Interactive Variables, Top
+
+@chapter Usage
+
+@section Invocation
+
+@cindex invocation
+
+Command-line invocation for @command{eukleides}, @command{euktopst}, or
+@command{euktoeps} is:
+
+@example
+@var{program} @{ @var{option} @dots{} @} @var{file_name}
+@end example
+
+The name of the generated output is formed of the base name of the input file
+and the @code{.eps} or @code{.ps} suffix for @command{eukleides}, the
+@code{.pst} suffix for @command{euktopst}, or the @code{.eps} suffix for
+@command{euktopst}. The base name is the file name deprived of the @code{.euk}
+suffix. If the @code{.euk} suffix is not present, the base name is the file
+name itself.
+
+@subheading Common options
+
+@table @code
+@item  -l, --locale@{=@var{lang}@}
+Use keywords localized in language @var{lang}.  With no argument given,
+the current locale is set to the value of the LANG environment variable.
+This feature may be disabled.
+@item  -@numb{}, --interactive=@var{string}
+Modify interactive variables.
+@item  -v, --version
+Print version number and exit.
+@item  -h, --help
+Print a short help and exit.
+@end table
+
+@subheading Options specific to @command{eukleides} and @command{euktopst}
+
+@table @code
+@item  -o, --output@{=@var{output_file}@}
+Set an output file name. With no argument given, the output stream is set
+to standard output.
+@item  -b, --batchmode@{=@var{data_file}@}
+Don't stop for input. If given, use @var{data_file} instead of standard input.
+@end table
+
+@subheading Option specific to @command{eukleides}
+
+@table @code
+@item  -a, --animate=@var{string}
+Animate interactive script.
+@end table
+
+@subheading Options specific to @command{euktoeps}
+
+@table @code
+@item  -i, --include=@var{string}
+Include @LaTeX{} directives in preamble.
+@item  -d, --data=@var{data_file}
+Use specific data.
+@end table
+
+@c -----------------------------------------------------------------------------
+
+@node @TeX{}, Localized Keywords, Invocation, Top
+
+@section @TeX{}
+
+@cindex @TeX{}
+
+The @command{eukleides} package that comes with the Eukleides distribution provides
+a convenient way to include geometric figures in @LaTeX{} documents.
+
+Eukleides figures must be enclosed in @command{eukleides} environments. When
+first running @command{latex} or @command{pdflatex}, the enclosed codes are
+saved to individual files, named after the @TeX{} source. For instance,
+@var{mydoc.tex} would yield @var{mydoc-fig1.pst}, @var{mydoc-fig2.pst}, etc.
+
+When using @command{latex}, the figure files should then be transformed in
+@TeX{} files with the @command{euktotex} script (which takes the @TeX{} source
+name as argument), and @command{latex} run again. It should be noted that the
+PSTricks package is automatically loaded if necessary.
+
+When using @command{pdflatex}, due to incompatibilities with PSTricks, the
+figure files should be transformed in PDF pictures with the @command{euktopdf}
+script (which likewise takes the @TeX{} source name as argument), and
+@command{pdflatex} run again. If specific packages are required to typeset the
+figures, the corresponding @command{\usepackage} directives have to be enclosed
+in a @command{packages} environment in the preamble. This has no effect when
+using @command{latex}.
+
+@c -----------------------------------------------------------------------------
+
+@node Localized Keywords, Command Index, @TeX{}, Top
+
+@section Localized Keywords
+
+@cindex localized keywords
+
+Localized versions of the keywords are available (currently German and French).
+The @w{@code{--locale}} option allows to specify the desired locale. With no
+argument given, the current locale is set to the value of the LANG environment
+variable. Otherwise the argument has to be a valid locale identifier, e.g.
+@code{fr_FR} or @code{fr_FR.utf8}, depending on the default charmap.
+This feature may be disabled at build time.
+
+@example
+@end example
+
+Conversion tables for each language are provided with the Eukleides
+distribution.
+
+@c -----------------------------------------------------------------------------
+
+@node Command Index, Concept Index, Localized Keywords, Top
+
+@unnumbered Command Index
+
+@printindex fn
+
+@c -----------------------------------------------------------------------------
+
+@node Concept Index, , Command Index, Top
+
+@unnumbered Concept Index
+
+@printindex cp
+
+@c -----------------------------------------------------------------------------
+
+@bye

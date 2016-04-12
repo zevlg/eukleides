@@ -1,0 +1,626 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Eukleides 1.5.4\n"
+"Report-Msgid-Bugs-To: Peter Bartke <bartke@mi.fu-berlin.de>\n"
+"POT-Creation-Date: 2010-03-05 21:49+0100\n"
+"PO-Revision-Date: 2010-03-05 21:49+0100\n"
+"Last-Translator: Peter Bartke <bartke@mi.fu-berlin.de>\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "abs"
+msgstr "abs"
+
+msgid "abscissa"
+msgstr "Abszisse"
+
+msgid "acos"
+msgstr "acos"
+
+msgid "altitude"
+msgstr "Lot"
+
+msgid "and"
+msgstr "und"
+
+msgid "angle"
+msgstr "Winkel"
+
+msgid "append"
+msgstr "append"
+
+msgid "area"
+msgstr "Fläche"
+
+msgid "arg"
+msgstr "arg"
+
+msgid "arrow"
+msgstr "Pfeil"
+
+msgid "arrows"
+msgstr "Pfeile"
+
+msgid "asin"
+msgstr "asin"
+
+msgid "atan"
+msgstr "atan"
+
+msgid "back"
+msgstr "zurück"
+
+msgid "barycenter"
+msgstr "Schwerpunkt"
+
+msgid "bisector"
+msgstr "Winkelhalbierende"
+
+msgid "black"
+msgstr "schwarz"
+
+msgid "blue"
+msgstr "blau"
+
+msgid "box"
+msgstr "Kasten"
+
+msgid "card"
+msgstr "card"
+
+msgid "cat"
+msgstr "cat"
+
+msgid "ceil"
+msgstr "ceil"
+
+msgid "center"
+msgstr "Zentrum"
+
+msgid "centroid"
+msgstr "Gravizentrum"
+
+msgid "circle"
+msgstr "Kreis"
+
+msgid "clamp"
+msgstr "clamp"
+
+msgid "clear"
+msgstr "clear"
+
+msgid "close"
+msgstr "close"
+
+msgid "collinear"
+msgstr "kollinear"
+
+msgid "conic"
+msgstr "Kegelschnitt"
+
+msgid "cos"
+msgstr "cos"
+
+msgid "cross"
+msgstr "Kreuz"
+
+msgid "cyan"
+msgstr "cyan"
+
+msgid "darkgray"
+msgstr "dunkelgrau"
+
+msgid "dashed"
+msgstr "strichliert"
+
+msgid "deg"
+msgstr "deg"
+
+msgid "disc"
+msgstr "Scheibe"
+
+msgid "display"
+msgstr "display"
+
+msgid "distance"
+msgstr "Abstand"
+
+msgid "dot"
+msgstr "Punkt"
+
+msgid "dotted"
+msgstr "punktiert"
+
+msgid "double"
+msgstr "doppelt"
+
+msgid "draw"
+msgstr "zeichne"
+
+msgid "eccentricity"
+msgstr "Exzentrizität"
+
+msgid "element"
+msgstr "Element"
+
+msgid "ellipse"
+msgstr "Ellipse"
+
+msgid "else"
+msgstr "else"
+
+msgid "elseif"
+msgstr "elseif"
+
+msgid "empty"
+msgstr "empty"
+
+msgid "end"
+msgstr "end"
+
+msgid "entire"
+msgstr "ganz"
+
+msgid "eps"
+msgstr "eps"
+
+msgid "equilateral"
+msgstr "gleichseitigesDreieck"
+
+msgid "error"
+msgstr "error"
+
+msgid "exp"
+msgstr "exp"
+
+msgid "false"
+msgstr "false"
+
+msgid "floor"
+msgstr "floor"
+
+msgid "foci"
+msgstr "Brennpunkte"
+
+msgid "font"
+msgstr "font"
+
+msgid "for"
+msgstr "for"
+
+msgid "forth"
+msgstr "vorwärts"
+
+msgid "frame"
+msgstr "Rahmen"
+
+msgid "full"
+msgstr "durchgezogen"
+
+msgid "gray"
+msgstr "grau"
+
+msgid "green"
+msgstr "grün"
+
+msgid "half"
+msgstr "halb"
+
+msgid "height"
+msgstr "Höhe"
+
+msgid "hexagon"
+msgstr "Hexagon"
+
+msgid "homothecy"
+msgstr "Streckung"
+
+msgid "horizontal"
+msgstr "horizontal"
+
+msgid "hyperbola"
+msgstr "Hyperbel"
+
+msgid "if"
+msgstr "if"
+
+msgid "incircle"
+msgstr "Inkreis"
+
+msgid "in"
+msgstr "in"
+
+msgid "intersection"
+msgstr "Schnitt"
+
+msgid "isobarycenter"
+msgstr "Gleichgewichtspunkt"
+
+msgid "isosceles"
+msgstr "gleichschenkligesDreieck"
+
+msgid "label"
+msgstr "Marke"
+
+msgid "length"
+msgstr "Länge"
+
+msgid "lightgray"
+msgstr "hellgrau"
+
+msgid "line"
+msgstr "Gerade"
+
+msgid "ln"
+msgstr "ln"
+
+msgid "local"
+msgstr "locale"
+
+msgid "locus"
+msgstr "geometrischerOrt"
+
+msgid "magenta"
+msgstr "magenta"
+
+msgid "major"
+msgstr "grosseHalbachse"
+
+msgid "max"
+msgstr "max"
+
+msgid "median"
+msgstr "Median"
+
+msgid "midpoint"
+msgstr "Mittelpunkt"
+
+msgid "min"
+msgstr "min"
+
+msgid "minor"
+msgstr "kleineHalbachse"
+
+msgid "mobile"
+msgstr "mobile"
+
+msgid "mod"
+msgstr "mod"
+
+msgid "none"
+msgstr "keine"
+
+msgid "not"
+msgstr "not"
+
+msgid "number"
+msgstr "number"
+
+msgid "on"
+msgstr "auf"
+
+msgid "or"
+msgstr "or"
+
+msgid "ordinate"
+msgstr "Ordinate"
+
+msgid "orthocenter"
+msgstr "Höhenschnittpunkt"
+
+msgid "output"
+msgstr "output"
+
+msgid "parabola"
+msgstr "Parabel"
+
+msgid "parallel"
+msgstr "Parallele"
+
+msgid "parallelogram"
+msgstr "Parallelogramm"
+
+msgid "pentagon"
+msgstr "Fünfeck"
+
+msgid "perimeter"
+msgstr "Durchmesser"
+
+msgid "perpendicular"
+msgstr "Senkrechte"
+
+msgid "pi"
+msgstr "pi"
+
+msgid "plus"
+msgstr "plus"
+
+msgid "point"
+msgstr "Punkt"
+
+msgid "polygon"
+msgstr "Polygon"
+
+msgid "print"
+msgstr "print"
+
+msgid "projection"
+msgstr "Projektion"
+
+msgid "pstricks"
+msgstr "pstricks"
+
+msgid "put"
+msgstr "setze"
+
+msgid "rad"
+msgstr "rad"
+
+msgid "radius"
+msgstr "Radius"
+
+msgid "read"
+msgstr "read"
+
+msgid "rectangle"
+msgstr "Rechteck"
+
+msgid "red"
+msgstr "rot"
+
+msgid "reflection"
+msgstr "Spiegelung"
+
+msgid "release"
+msgstr "release"
+
+msgid "return"
+msgstr "return"
+
+msgid "right"
+msgstr "rechtwinkligesDreieck"
+
+msgid "rotation"
+msgstr "Drehung"
+
+msgid "round"
+msgstr "round"
+
+msgid "scale"
+msgstr "skaliere"
+
+msgid "set"
+msgstr "set"
+
+msgid "sign"
+msgstr "sign"
+
+msgid "simple"
+msgstr "einfach"
+
+msgid "sin"
+msgstr "sin"
+
+msgid "sqrt"
+msgstr "sqrt"
+
+msgid "square"
+msgstr "Quadrat"
+
+msgid "step"
+msgstr "step"
+
+msgid "stop"
+msgstr "stop"
+
+msgid "string"
+msgstr "string"
+
+msgid "sub"
+msgstr "subset"
+
+msgid "symmetric"
+msgstr "symmetrisch"
+
+msgid "tan"
+msgstr "tan"
+
+msgid "to"
+msgstr "to"
+
+msgid "translation"
+msgstr "Verschiebung"
+
+msgid "triangle"
+msgstr "Dreieck"
+
+msgid "triple"
+msgstr "dreifach"
+
+msgid "true"
+msgstr "true"
+
+msgid "vector"
+msgstr "Vektor"
+
+msgid "vertical"
+msgstr "vertikal"
+
+msgid "while"
+msgstr "while"
+
+msgid "white"
+msgstr "weiss"
+
+msgid "write"
+msgstr "write"
+
+msgid "yellow"
+msgstr "gelb"
+
+### End of keywords ###
+
+msgid "invalid font descriptor"
+msgstr "ungültiger Fontname"
+
+msgid "Unable to open output file"
+msgstr "Ausgabedatei kann nicht geöffnet werden"
+
+msgid "invalid angle"
+msgstr "ungültiger Winkel"
+
+msgid "invalid segment"
+msgstr "ungültige Strecke"
+
+msgid "invalid line"
+msgstr "ungültige Gerade"
+
+msgid "empty set"
+msgstr "leere Menge"
+
+msgid "invalid triangle"
+msgstr "ungültiges Dreieck"
+
+msgid "invalid points"
+msgstr "ungültige Punkte"
+
+msgid "invalid lengths"
+msgstr "ungültige Längen"
+
+msgid "invalid angles"
+msgstr "ungültige Winkel"
+
+msgid "invalid parameters"
+msgstr "ungültige Parameter"
+
+msgid "division by zero"
+msgstr "Division durch Null"
+
+msgid "invalid argument in sqrt"
+msgstr "ungültiges Argument in sqrt"
+
+msgid "invalid exponent"
+msgstr "ungültiger Exponent"
+
+msgid "invalid argument in ln"
+msgstr "ungültiges Argument in ln"
+
+msgid "invalid argument in tan"
+msgstr "ungültiges Argument in tan"
+
+msgid "invalid argument in asin"
+msgstr "ungültiges Argument in asin"
+
+msgid "invalid argument in acos"
+msgstr "ungültiges Argument in acos"
+
+msgid "invalid state"
+msgstr "ungültiger Zustand"
+
+msgid "invalid boundaries"
+msgstr "ungültige Ränder"
+
+msgid "parallel lines"
+msgstr "parallele Geraden"
+
+msgid "undefined line"
+msgstr "undefinierte Gerade"
+
+msgid "invalid set"
+msgstr "ungültige Menge"
+
+msgid "invalid ratio"
+msgstr "inkorrektes Verhältnis"
+
+msgid "invalid function definition"
+msgstr "ungültige Funktionsdefinition"
+
+msgid "too many arguments"
+msgstr "zu viele Argumente"
+
+msgid "invalid local declaration"
+msgstr "ungültige lokale Deklarationen"
+
+msgid "invalid return statement"
+msgstr "ungültige return-Anweisung"
+
+msgid "function ending without return statement"
+msgstr "Funktion endet ohne return-Anweisung"
+
+msgid "too many overlapping calls"
+msgstr "zu viele überdeckende Aufrufe"
+
+msgid "too many parameters"
+msgstr "zu viele Parameter"
+
+msgid "wrong parameter type"
+msgstr "falscher Parametertyp"
+
+msgid "too few parameters"
+msgstr "zu wenig Parameter"
+
+msgid "Unable to open input file"
+msgstr "kann Eingabedatei nicht öffnen"
+
+msgid "Too many levels of inclusion"
+msgstr "zu viele Inklusionsstufen"
+
+msgid "Unable to open module"
+msgstr "Modul kann nicht geöffnet werden"
+
+msgid "invalid character"
+msgstr "ungültiges Zeichen"
+
+msgid "unterminated string"
+msgstr "nicht beendete Zeichenkette"
+
+msgid "Memory overflow"
+msgstr "Speicherüberlauf"
+
+msgid "invalid indices"
+msgstr "ungültige Indizes"
+
+msgid "illegal step number"
+msgstr "illegale Schrittzahl"
+
+msgid "illegal locus definition"
+msgstr "Illegale locus-Definition"
+
+msgid "illegal put statement"
+msgstr "illegale 'setze'-Anweisung"
+
+msgid "empty parameter stack"
+msgstr "leerer Parameter-Stack"
+
+msgid "empty return stack"
+msgstr "leerer Rückgabestack"
+
+msgid "memory allocation error"
+msgstr "Fehler bei der Anforderung von Speicherplatz"
+
+msgid "index out of range"
+msgstr "Verletzung des Indexbereichs"
+
+msgid "invalid scale factor"
+msgstr "ungültiger Skalierungsfaktor"
+
+msgid "invalid bounding box"
+msgstr "ungültige Begrenzungsbox"
+
+msgid "invalid size"
+msgstr "ungültige Grösse"
+
+msgid "first index out of range"
+msgstr "erster Index liegt nicht im Bereich"
+
+msgid "second index out of range"
+msgstr "zweiter Index liegt nicht im Bereich"
+
+msgid "invalid vertices number"
+msgstr "ungültige Eckennummer"
+
+msgid "parse error"
+msgstr "Syntaxfehler"
+

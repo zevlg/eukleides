@@ -1,0 +1,81 @@
+1.5.4
+
+Bug with labels in euktopst fixed.
+
+Printing of null values improved.
+
+Fixed formating of PSTricks output for conics.
+
+1.5.3
+
+Local scale parameter bug corrected.
+
+Fixed bug concerning 'and' and 'or' operators.
+
+Added examples in contrib.
+
+Moved po to contrib/po.
+
+Added keyword localization for German.
+
+1.5.2
+
+Implemented optional drawing step for conics.
+
+Changed back install-info into ginstall-info in doc/Makefile.
+
+Wrote win32 replacements for  euktotex and euktopdf.
+
+Fixed basename determination in euktotex and euktopdf.
+
+Added readline replacement for win builds.
+
+Changed rindex into strrchr in eukleides/check.c.
+
+1.5.1
+
+Documentation revised and updated.
+
+Changed ginstall-info into install-info in doc/Makefile.
+
+Line-set intersection bug fixed.
+
+Suppressed libintl dependency when no locale is selected.
+
+Bug with byte code instruction JPZ on x64 platforms fixed.
+
+Byte code debugging implemented.
+
+Nested functions suppressed.
+
+Line drawing bug corrected.
+
+Problem with printing of null values fixed.
+
+Bug with point on segment fixed.
+
+Problem with formating of \pspolygon in PSTricks output fixed.
+
+Long option name --local changed to --locale, bug with argument fixed.
+
+Optional step value in for loops added.
+
+Default locus point number changed to 120.
+
+Bug with homothetic circles and conics fixed.
+
+Problem with output command fixed.
+
+Installation directory problem in doc/Makefile and man/Makefile fixed.
+
+Local scale parameter bug for strings and hatches fixed.
+
+Flag -lcurses changed to -lncurses in build/Makefile.
+
+Flex invocation problem in build/Makefile fixed. 
+
+Bug with segment drawing in euktopst fixed.
+
+1.5.0
+
+Initial release.

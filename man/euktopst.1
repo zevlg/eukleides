@@ -1,0 +1,60 @@
+.TH EUKTOPST 1 2010/02/16 Eukleides "Eukleides Manual"
+.SH NAME
+euktopst - Eukleides interpreter to PSTricks
+.SH SYNOPSIS
+\fBeuktopst\fP [\fIOPTION\fP...] \fIFILE\fP
+.SH DESCRIPTION
+Eukleides is a computer language devoted to elementary plane geometry.
+It aims to be a fairly comprehensive system to create geometric figures,
+either static or dynamic.
+It allows to handle geometric types of data like points, vectors,
+lines, circles, or conics.
+.PP
+The \fBeuktopst\fP program interprets Eukleides scripts into PSTricks
+figures.
+This program is mainly used by the scripts
+.BR euktoeps (1),
+.BR euktotex (1),
+and
+.BR euktopdf (1)
+which then run
+.BR latex (1)
+and other utilities to produce various types of output.
+.SH OPTIONS
+.TP
+\fB-l\fP, \fB--locale\fP[=\fILANG\fP]
+Use localized keywords.
+With no argument given, the current locale is set to the value of the
+LANG environment variable.
+Otherwise \fILANG\fP has to be a valid locale identifier, e.g. 'fr_FR'
+or 'fr_FR.utf8', depending on the default charmap. 
+This feature may be disabled.
+.TP
+\fB-o\fP, \fB--output\fP[=\fIOUTPUTFILE\fP]
+Set an output file name.
+With no argument given, the output stream is set to standard output.
+.TP
+\fB-#\fP, \fB--interactive\fP=\fISTRING\fP
+Modify interactive variables.
+.TP
+\fB-a\fP, \fB--animate\fP=\fISTRING\fP
+Animate interactive script.
+.TP
+\fB-b\fP, \fB--batchmode\fP[=\fIDATAFILE\fP]
+Don't stop for input.
+If given, use \fIDATAFILE\fP instead of standard input.
+.TP
+\fB-v\fP, \fB--version\fP
+Print version number and exit.
+.TP
+\fB-h\fP, \fB--help\fP
+Print immediate help and exit.
+.SH AUTHOR
+Christian Obrecht <obrecht \fIat\fP eukleides \fIdot\fP org>.
+.SH "SEE ALSO"
+Eukleides info pages for full documentation.
+.br
+.BR eukleides (1),
+.BR euktoeps (1),
+.BR euktotex (1),
+.BR euktopdf (1).

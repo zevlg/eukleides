@@ -1,0 +1,139 @@
+%
+%  Eukleides version 1.5.4
+%  Copyright (c) Christian Obrecht 2004-2010
+%
+%  This program is free software; you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published by
+%  the Free Software Foundation; either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  This program is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details.
+%
+%  You should have received a copy of the GNU General Public License
+%  along with this program; if not, write to the Free Software
+%  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+%
+
+\csname EukleidesLoaded\endcsname
+\let\EukleidesLoaded\endinput
+
+\def\TRS#1#2#3#4{%
+    \translate(#1,#2)\rotate{#3}\scale{#4}}
+
+\def\Simple#1#2#3#4{%
+  \gsave
+    \TRS{#1}{#2}{#3}{#4}
+    \moveto(-0.5,-1)
+    \lineto(0.5,1)
+    \stroke[linewidth=0.125]
+  \grestore}
+
+\def\Double#1#2#3#4{%
+  \gsave
+    \TRS{#1}{#2}{#3}{#4}
+    \moveto(-1,-1)
+    \lineto(0,1)
+    \moveto(0,-1)
+    \lineto(1,1)
+    \stroke[linewidth=0.125]
+  \grestore}
+
+\def\Triple#1#2#3#4{%
+  \gsave
+    \TRS{#1}{#2}{#3}{#4}
+    \moveto(-1.5,-1)
+    \lineto(-0.5,1)
+    \moveto(-0.5,-1)
+    \lineto(0.5,1)
+    \moveto(0.5,-1)
+    \lineto(1.5,1)
+    \stroke[linewidth=0.125]
+  \grestore}
+
+\def\Cross#1#2#3#4{%
+  \gsave
+    \TRS{#1}{#2}{#3}{#4}
+    \moveto(1,0)
+    \lineto(-1,0)
+    \moveto(0,1)
+    \lineto(0,-1)
+    \stroke[linewidth=0.2]
+  \grestore}
+
+\def\Dot#1#2#3{%
+  \gsave
+    \newpath
+    \pscircle(#1,#2){#3}
+    \fill[fillstyle=solid,fillcolor=\pslinecolor]
+  \grestore}
+
+\def\Dash#1#2#3#4#5{%
+  \gsave
+    \translate(#1,#2)
+    \rotate{#3}
+    \moveto(#4,0)
+    \lineto(#5,0)
+    \stroke
+  \grestore}
+
+\def\DoubleDash#1#2#3#4#5#6{%
+  \gsave
+    \translate(#1,#2)
+    \rotate{#5}
+    \moveto(#3,0)
+    \lineto(#4,0)
+    \stroke
+    \rotate{#6}
+    \moveto(#3,0)
+    \lineto(#4,0)
+    \stroke
+  \grestore}
+
+\def\TripleDash#1#2#3#4#5#6{%
+  \gsave
+    \translate(#1,#2)
+    \rotate{#5}
+    \moveto(#3,0)
+    \lineto(#4,0)
+    \stroke
+    \rotate{#6}
+    \moveto(#3,0)
+    \lineto(#4,0)
+    \stroke
+    \rotate{#6}
+    \moveto(#3,0)
+    \lineto(#4,0)
+    \stroke
+  \grestore}
+
+\def\DoubleArc#1#2#3#4#5#6{%
+  \gsave
+    \psarc(#1,#2){#3}{#5}{#6}
+    \stroke
+    \newpath
+    \psarc(#1,#2){#4}{#5}{#6}
+    \stroke
+  \grestore}
+
+\def\TripleArc#1#2#3#4#5#6#7{%
+  \gsave
+    \psarc(#1,#2){#3}{#6}{#7}
+    \stroke
+    \newpath
+    \psarc(#1,#2){#4}{#6}{#7}
+    \stroke
+    \newpath
+    \psarc(#1,#2){#5}{#6}{#7}
+    \stroke
+  \grestore}
+
+\def\Right#1#2#3#4#5#6{%
+  \gsave
+    \moveto(#1,#2)
+    \rlineto(#3,#4)
+    \rlineto(#5,#6)
+    \stroke
+  \grestore}

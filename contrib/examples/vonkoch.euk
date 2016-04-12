@@ -1,0 +1,20 @@
+% Von Koch fractal
+% Copyright (c) Philippe Delavalade & Christian Obrecht, 2010
+
+set vk(point A, point B, number d)
+  local C, D, E
+  if d == 0
+    return set(A)
+  end
+  C = barycenter(A, 2, B, 1)
+  D = barycenter(A, 1, B, 2)
+  C D E equilateral
+  d = d - 1
+  return vk(A, C, d).vk(C, E, d).vk(E, D, d).vk(D, B, d).B
+end
+
+A = point(0, 0)
+B = point(6, 0)
+s = vk(A, B, 5)
+
+draw s

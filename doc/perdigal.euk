@@ -1,0 +1,42 @@
+% Perdigal's demonstration of the Pythagorean theorem
+% Copyright (c) Christian Obrecht 2004, 2009
+
+box -3, -5.5, 8, 6, 1.2
+A B C triangle 5, 4, 3
+BA = vector(B, A)
+CB = vector(C, B)
+AC = vector(A, C)
+B A D E square
+C B F G square
+A C H I square
+O = isobarycenter(C.B.F.G)
+J = intersection(line(C, B), line(O, 90+arg(BA) deg))
+K = intersection(line(F, G), line(O, 90+arg(BA) deg))
+L = intersection(line(B, F), line(O, arg(BA) deg))
+M = intersection(line(G, C), line(O, arg(BA) deg))
+N = translation(C, -BA)
+P = translation(C, vector(O, B))
+Q = translation(B, vector(O, A))
+R = translation(F, vector(O, D))
+S = translation(G, vector(O, E))
+T = translation(J, vector(O, A))
+U = translation(K, vector(O, E))
+V = translation(L, vector(O, D))
+W = translation(M, vector(O, B))
+draw
+  (B.A.D.E)
+  (C.B.F.G)
+  (A.C.H.I)
+  J.K
+  L.M
+  P.U
+  Q.W
+  R.T
+  S.V
+end
+draw (A.B.C) 2
+draw dashed, gray
+  C.F
+  B.G
+  C.N
+end

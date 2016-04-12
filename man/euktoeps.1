@@ -1,0 +1,60 @@
+.TH EUKTOEPS 1 2010/02/16 Eukleides "Eukleides Manual"
+.SH NAME
+euktoeps - Eukleides to Encapsulated PostScript converter
+.SH SYNOPSIS
+\fBeuktoeps\fP [\fIOPTION\fP...] \fIFILE\fP
+.SH DESCRIPTION
+Eukleides is a computer language devoted to elementary plane geometry.
+It aims to be a fairly comprehensive system to create geometric figures,
+either static or dynamic.
+It allows to handle geometric types of data like points, vectors,
+lines, circles, or conics.
+.PP
+The \fBeuktoeps\fP script is useful to convert Eukleides scripts into
+Encapsulated PostScript figures.
+It runs the
+.BR euktopst (1)
+interpreter, then adds appropriate preamble and ending to the resulting
+code, last runs
+.BR latex (1)
+and
+.BR dvips (1).
+Hence, it is an alternative to the
+.BR eukleides (1)
+program when mathematics typesetting is required.
+.SH OPTIONS
+.TP
+\fB-i\fP, \fB--include\fP=\fISTRING\fP
+Include LaTeX directives in preamble.
+.TP
+\fB-l\fP, \fB--locale\fP[=\fILANG\fP]
+Use localized keywords.
+With no argument given, the current locale is set to the value of the
+LANG environment variable.
+Otherwise \fILANG\fP has to be a valid locale identifier, e.g. 'fr_FR'
+or 'fr_FR.utf8', depending on the default charmap. 
+This feature may be disabled.
+.TP
+\fB-#\fP, \fB--interactive\fP=\fISTRING\fP
+Modify interactive variables.
+.TP
+\fB-d\fP, \fB--data\fP=\fIDATAFILE\fP
+Use \fIDATAFILE\fP for input.
+This option is essential when using input functions, since
+.BR euktopst (1)
+is run in batch mode.
+.TP
+\fB-v\fP, \fB--version\fP
+Print version number and exit.
+.TP
+\fB-h\fP, \fB--help\fP
+Print immediate help and exit.
+.SH AUTHOR
+Christian Obrecht <obrecht \fIat\fP eukleides \fIdot\fP org>.
+.SH "SEE ALSO"
+Eukleides info pages for full documentation.
+.br
+.BR eukleides (1),
+.BR euktopst (1),
+.BR euktotex (1),
+.BR euktopdf (1).
