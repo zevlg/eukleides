@@ -47,7 +47,7 @@ $(BUILD_DIR)/%.o: %.c
 
 $(BINARY): $(OBJECTS)
 	@echo "    Linking $(notdir $@)"
-	@$(CC) $(LDFLAGS) $^ -o $@
+	@$(CC) $^ -o $@ $(LDFLAGS)
 
 ifneq ($(BINARY),)
 -include $(DEPEND)
